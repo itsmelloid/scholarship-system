@@ -5,27 +5,59 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Scholarship Monitoring System</title>
 <style>
-:root{--bg:#f4f6fa;--card:#fff;--ink:#1c2333;--mut:#667;--pri:#1f4e9c;--ok:#1a8f4c;--bad:#c0392b;--warn:#c98a00;--line:#dde2ec}
-*{box-sizing:border-box}body{margin:0;font-family:system-ui,Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--ink)}
-nav{background:var(--pri);display:flex;flex-wrap:wrap;gap:4px;padding:8px 16px;align-items:center}
-nav b{color:#fff;margin-right:auto}nav button{background:none;border:0;color:#dbe5ff;padding:8px 12px;cursor:pointer;border-radius:6px;font-size:14px}
-nav button:hover,nav button.on{background:#ffffff26;color:#fff}
-main{max-width:1000px;margin:20px auto;padding:0 16px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px;margin-bottom:16px}
-h2{margin:0 0 12px;font-size:18px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
-.stat{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px}.stat b{font-size:28px;display:block}.stat span{color:var(--mut);font-size:13px}
-form{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;align-items:end}
-label{font-size:12px;color:var(--mut);display:flex;flex-direction:column;gap:3px}
-input,select{padding:8px;border:1px solid var(--line);border-radius:6px;font-size:14px;width:100%}
-button.btn{background:var(--pri);color:#fff;border:0;padding:9px 14px;border-radius:6px;cursor:pointer;font-size:14px}
-button.sm{padding:4px 9px;font-size:12px}button.ok{background:var(--ok)}
-.tbl{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:left;padding:8px;border-bottom:1px solid var(--line)}th{color:var(--mut);font-size:12px;text-transform:uppercase}
-.tag{padding:2px 8px;border-radius:99px;font-size:12px;background:#e8ecf5}.Compliant,.Verified{background:#d8f3e3;color:var(--ok)}.With\ Deficiency{background:#fbdcd8;color:var(--bad)}.Pending,.For\ Verification{background:#fff0c9;color:var(--warn)}
-.bar{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap}.bar>*{flex:1;min-width:150px}
-#toast{position:fixed;bottom:16px;right:16px;padding:10px 16px;border-radius:8px;color:#fff;display:none;z-index:9}
-#login{max-width:340px;margin:12vh auto}#login form{grid-template-columns:1fr}
+:root{--pri:#00914c;--pri-d:#00753d;--mint:#d9f5e6;--gold:#ffc20e;--bg:#eef2f5;--card:#fff;--ink:#2b3a33;--mut:#7a8790;--line:#e3e8ec;--ok:#00914c;--bad:#d9433b;--warn:#c98a00}
+[hidden]{display:none!important}
+*{box-sizing:border-box}body{margin:0;font-family:"Segoe UI",system-ui,Arial,sans-serif;background:var(--bg);color:var(--ink);font-size:14px}
+#app{display:flex;min-height:100vh}
+aside{width:250px;background:#fff;border-right:1px solid var(--line);flex-shrink:0;transition:margin .2s}
+body.mini aside{margin-left:-250px}
+.brand{height:60px;display:flex;align-items:center;gap:8px;padding:0 18px;font-size:20px;font-weight:600;letter-spacing:1px;border-bottom:1px solid var(--line)}
+.brand i{font-style:normal;color:var(--pri)}.brand span{color:var(--mut);font-weight:300}
+.user{background:var(--mint);padding:18px;display:flex;gap:12px;align-items:center;min-height:100px}
+.av{width:54px;height:54px;border-radius:50%;background:#fff;border:3px solid #fff;box-shadow:0 0 0 1px #bfe6d0;display:grid;place-items:center;font-size:26px}
+.user b{display:block;color:#5c6b64;font-weight:400}.user small{color:var(--pri);display:flex;align-items:center;gap:5px;margin-top:4px}
+.dot{width:9px;height:9px;border-radius:50%;background:#1ec66b;display:inline-block}
+.sec{background:var(--mint);color:#66766e;font-size:12px;padding:12px 18px;letter-spacing:.5px}
+aside nav{padding:4px 0;display:flex;flex-direction:column}
+aside nav button{background:none;border:0;text-align:left;padding:13px 18px;font-size:14px;color:#5a6a63;cursor:pointer;display:flex;gap:14px;align-items:center;border-left:4px solid transparent}
+aside nav button em{font-style:normal;width:20px;text-align:center;filter:saturate(1.3)}
+aside nav button:hover{background:#f3f7f5}aside nav button.on{background:#cfd3d6;color:#222;letter-spacing:.5px;border-left-color:var(--gold)}
+.content{flex:1;min-width:0}
+header{background:var(--pri);color:#fff;padding:14px 22px 0;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+header h1{margin:0 auto;font-size:22px;font-weight:600;text-align:center;flex:1}
+#burger{background:none;border:0;color:var(--gold);font-size:28px;cursor:pointer;line-height:1}
+.hbar{background:var(--pri);color:#fff;padding:10px 22px 0;display:flex;gap:14px;align-items:center}
+.hbar .av{width:56px;height:56px;font-size:28px}.hbar b{display:block}.hbar span{font-size:13px;opacity:.9}
+.hbar .tab{margin-left:auto;background:var(--pri-d);padding:10px 22px;border-radius:4px 4px 0 0;align-self:flex-end;font-size:14px}
+.lo{background:var(--gold);color:#333;border:0;padding:6px 14px;border-radius:3px;cursor:pointer;font-size:13px}
+main{padding:22px;max-width:1150px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:18px;margin-bottom:18px;box-shadow:0 1px 2px #0000000a}
+h2{margin:0 0 14px;font-size:17px;font-weight:500;color:#4d5c55;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--line);padding-bottom:10px}
+main>h2{border:0;text-transform:none;font-size:20px;color:var(--pri-d)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:16px}
+.stat{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--pri);border-radius:4px;padding:16px;box-shadow:0 1px 2px #0000000a}
+.stat span{color:var(--mut);font-size:14px}.stat b{font-size:34px;display:block;font-weight:500;margin-top:6px}
+.stat:nth-child(2){border-top-color:var(--gold)}.stat:nth-child(3){border-top-color:#2f9bd8}.stat:nth-child(5){border-top-color:var(--bad)}
+form{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;align-items:end}
+label{font-size:12px;color:var(--mut);display:flex;flex-direction:column;gap:4px}
+input,select{padding:9px;border:1px solid #d3dbe0;border-radius:3px;font-size:14px;width:100%;background:#fff}
+input:focus,select:focus{outline:2px solid #00914c40;border-color:var(--pri)}
+button.btn{background:var(--pri);color:#fff;border:0;padding:10px 16px;border-radius:3px;cursor:pointer;font-size:14px}
+button.btn:hover{background:var(--pri-d)}
+button.sm{padding:5px 11px;font-size:12px;background:var(--gold);color:#333}button.sm:hover{background:#e6ac00}
+button.ok{background:var(--pri);color:#fff}button.ok:hover{background:var(--pri-d)}
+.bar{display:flex;gap:10px;margin-bottom:12px;flex-wrap:wrap}.bar>*{flex:1;min-width:160px}
+.tbl{overflow-x:auto}table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line)}
+th{color:#fff;background:var(--pri);font-size:12px;text-transform:uppercase;font-weight:500}tr:hover td{background:#f6fbf8}
+.tag{padding:3px 10px;border-radius:99px;font-size:12px;background:#e8ecef;color:#55636b;white-space:nowrap}
+.Compliant,.Verified{background:var(--mint);color:var(--pri-d)}.With\ Deficiency{background:#fde1df;color:var(--bad)}.Pending,.For\ Verification{background:#fff2c2;color:#8a6500}
+#toast{position:fixed;bottom:18px;right:18px;padding:11px 18px;border-radius:4px;color:#fff;display:none;z-index:9;box-shadow:0 4px 12px #0003}
+body.lg{min-height:100vh;background:linear-gradient(180deg,var(--pri) 0 50%,var(--bg) 50%)}
+#login{max-width:360px;margin:12vh auto;border-top:5px solid var(--gold);padding:26px}#login form{grid-template-columns:1fr}
+#login h2{text-align:center;border:0;color:var(--pri-d);text-transform:none;font-size:20px}
 small{color:var(--mut)}
+@media(max-width:800px){aside{position:fixed;z-index:5;height:100%;margin-left:-250px;overflow:auto}body.mini aside{margin-left:0}}
+@media print{aside,header,.hbar,.bar,#burger{display:none!important}main{padding:0}.card{border:0;box-shadow:none}}
 </style>
 </head>
 <body>
@@ -39,21 +71,36 @@ small{color:var(--mut)}
 </div>
 
 <div id="app" hidden>
-  <nav>
-    <b>🎓 Scholarship Monitor</b>
-    <button data-v="dashboard">Dashboard</button><button data-v="scholars">Scholars</button>
-    <button data-v="programs">Scholarship Programs</button><button data-v="subs">Grade Submissions</button>
-    <button data-v="compliance">Compliance</button><button onclick="logout()">Logout</button>
-  </nav>
-  <main id="view"></main>
+  <aside>
+    <div class="brand"><i>🎓</i> SMS <span>| Scholarship</span></div>
+    <div class="user"><div class="av">👤</div><div><b id="wn"></b><small><i class="dot"></i>Online</small></div></div>
+    <div class="sec">MAIN NAVIGATION</div>
+    <nav>
+      <button data-v="dashboard"><em>🏠</em>Dashboard</button>
+      <button data-v="scholars"><em>👥</em>Scholars</button>
+      <button data-v="programs"><em>📋</em>Scholarship Programs</button>
+      <button data-v="subs"><em>📝</em>Grade Submissions</button>
+      <button data-v="compliance"><em>✅</em>Compliance</button>
+      <button data-v="deficiencies"><em>⚠️</em>Deficiencies</button>
+      <button data-v="renewal"><em>🔄</em>Renewals</button>
+      <button data-v="reports"><em>📊</em>Reports</button>
+    </nav>
+    <div class="sec">ACCOUNT</div>
+    <nav><button onclick="logout()"><em>🚪</em>Logout</button></nav>
+  </aside>
+  <div class="content">
+    <header><button id="burger" onclick="document.body.classList.toggle('mini')">☰</button><h1>Student Scholarship Monitoring &amp; Compliance</h1><button class="lo" onclick="logout()">Logout ▸</button></header>
+    <div class="hbar"><div class="av">👤</div><div><b id="hn"></b><span id="hr"></span></div><div class="tab">🏠 Home</div></div>
+    <main id="view"></main>
+  </div>
 </div>
 <div id="toast"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 <script>
 // ====== 1. PASTE YOUR SUPABASE VALUES (Project Settings > API) ======
-const SUPABASE_URL = 'https://YOUR-PROJECT.supabase.co';
-const SUPABASE_KEY = 'YOUR-ANON-PUBLIC-KEY';
+const SUPABASE_URL = 'https://ubblugsjjtnbidldtlyj.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_-J6fmiKtKllmyx_cSQldwg_KFpqHlUv';
 // ====================================================================
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 const $ = id => document.getElementById(id);
@@ -78,10 +125,11 @@ async function login(e) {
 async function logout() { await sb.auth.signOut(); boot(); }
 async function boot() {
   const { data: { session } } = await sb.auth.getSession();
-  $('login').hidden = !!session; $('app').hidden = !session;      // protected pages hidden when logged out
+  document.body.classList.toggle('lg', !session); $('login').hidden = !!session; $('app').hidden = !session;      // protected pages hidden when logged out
   if (!session) return;
   const { data } = await sb.from('profiles').select('*').eq('id', session.user.id).single();
   me = { id: session.user.id, role: 'scholar', full_name: session.user.email, ...(data || {}) };
+  $('wn').textContent=$('hn').textContent=me.full_name; $('hr').textContent=me.role.toUpperCase();
   go('dashboard');
 }
 document.querySelectorAll('nav button[data-v]').forEach(b => b.onclick = () => go(b.dataset.v));
@@ -93,7 +141,7 @@ async function loadRefs() {
 async function go(v) {
   document.querySelectorAll('nav button[data-v]').forEach(b => b.classList.toggle('on', b.dataset.v === v));
   await loadRefs();
-  ({ dashboard, scholars: viewScholars, programs: viewPrograms, subs: viewSubs, compliance: viewCompliance })[v]();
+  ({ dashboard, scholars: viewScholars, programs: viewPrograms, subs: viewSubs, compliance: viewCompliance, deficiencies: viewDef, renewal: viewRenewal, reports: viewReports })[v]();
 }
 const opts = (arr, val, txt, sel) => arr.map(x => `<option value="${x[val]}" ${x[val] == sel ? 'selected' : ''}>${esc(typeof txt === 'function' ? txt(x) : x[txt])}</option>`).join('');
 const staffOnly = h => isStaff() ? h : `<p><small>Read-only: only Staff/Admin can modify records.</small></p>`;
@@ -121,6 +169,10 @@ function viewScholars() {
       <label>Scholarship<select id="s_prog"><option value="">-- select --</option>${opts(programs.filter(p => p.active), 'id', 'program_name')}</select></label>
       <label>Status<select id="s_stat">${STATUSES.map(s => `<option>${s}</option>`).join('')}</select></label>
       <button class="btn">Save Scholar</button></form>`)}</div>
+    ${isStaff() ? `<div class="card"><h2>Assign Scholarship</h2><form onsubmit="assign(event)">
+      <label>Scholar<select id="a_s"><option value="">-- select --</option>${opts(scholars, 'id', s => `${s.student_id} – ${s.full_name}`)}</select></label>
+      <label>Scholarship Program<select id="a_p"><option value="">-- select --</option>${opts(programs.filter(p => p.active), 'id', 'program_name')}</select></label>
+      <button class="btn">Assign</button></form></div>` : ''}
     <div class="card"><h2>Scholars</h2><div class="bar">
       <input id="q" placeholder="Search Student ID or name…" oninput="renderScholars()">
       <select id="fp" onchange="renderScholars()"><option value="">All programs</option>${opts(programs, 'id', 'program_name')}</select>
@@ -132,7 +184,7 @@ function renderScholars() {
   const q = $('q').value.toLowerCase(), fp = $('fp').value, fs = $('fs').value;
   const rows = scholars.filter(s => (!q || s.student_id.toLowerCase().includes(q) || s.full_name.toLowerCase().includes(q)) && (!fp || s.scholarship_id === fp) && (!fs || s.status === fs));
   $('stbl').innerHTML = `<table><tr><th>Student ID</th><th>Name</th><th>Degree</th><th>Yr</th><th>Scholarship</th><th>Status</th><th></th></tr>${rows.map(s =>
-    `<tr><td>${esc(s.student_id)}</td><td>${esc(s.full_name)}</td><td>${esc(s.degree_program)}</td><td>${s.year_level ?? ''}</td><td>${esc(s.scholarship_programs?.program_name)}</td><td>${tag(s.status)}</td>
+    `<tr><td>${esc(s.student_id)}</td><td>${esc(s.full_name)}</td><td>${esc(s.degree_program)}</td><td>${s.year_level ?? ''}</td><td>${esc(s.scholarship_programs?.program_name)}</td><td>${isStaff() ? statusSel(s) : tag(s.status)}</td>
     <td>${isStaff() ? `<button class="btn sm" onclick="editScholar('${s.id}')">Edit</button>` : ''}</td></tr>`).join('') || '<tr><td colspan=7>No matching scholars.</td></tr>'}</table>`;
 }
 function editScholar(id) {
@@ -227,13 +279,159 @@ async function verify(id) {
     submission_status: 'Verified', verified_by: me.id, verified_at: new Date().toISOString(), evaluation_result: ev.result, deficiency_notes: ev.notes
   }).eq('id', id).eq('submission_status', 'Pending').select();      // BR-09: cannot verify twice
   if (error || !data?.length) return toast(error?.message || 'Already verified or not permitted.', false);
-  await sb.from('scholars').update({ status: ev.result }).eq('id', g.scholar_id);
+  await changeStatus(g.scholar_id, ev.result, 'Verified ' + g.academic_year + ' ' + g.semester);
+  if (ev.result === 'With Deficiency') await sb.from('deficiencies').insert({ scholar_id: g.scholar_id, submission_id: id, description: ev.notes, recorded_by: me.id });
   toast(`Verified → ${ev.result}`); viewSubs();
 }
 async function viewCompliance() {
   const { data } = await sb.from('grade_submissions').select('*, scholars(student_id, full_name, scholarship_programs(program_name))').eq('submission_status', 'Verified').order('verified_at', { ascending: false });
   $('view').innerHTML = `<div class="card tbl"><h2>Compliance Evaluations (verified only)</h2><table><tr><th>Scholar</th><th>Program</th><th>AY / Sem</th><th>Result</th><th>Deficiency</th></tr>${(data || []).map(g =>
     `<tr><td>${esc(g.scholars.student_id)} ${esc(g.scholars.full_name)}</td><td>${esc(g.scholars.scholarship_programs?.program_name)}</td><td>${esc(g.academic_year)} ${esc(g.semester)}</td><td>${tag(g.evaluation_result)}</td><td>${esc(g.deficiency_notes) || '—'}</td></tr>`).join('') || '<tr><td colspan=5>No verified submissions yet.</td></tr>'}</table></div>`;
+}
+
+// ---------- ASSIGN SCHOLARSHIP ----------
+async function assign(e) {
+  e.preventDefault();
+  const id = $('a_s').value, pid = $('a_p').value;
+  if (!id || !pid) return toast('Select a scholar and a program.', false);
+  const { error } = await sb.from('scholars').update({ scholarship_id: pid }).eq('id', id);
+  if (error) return toast(error.message, false);
+  const s = scholars.find(x => x.id === id);
+  await sb.from('status_history').insert({ scholar_id: id, old_status: s.status, new_status: s.status, reason: 'Scholarship assigned: ' + programs.find(p => p.id === pid).program_name, changed_by: me.id });
+  toast('Scholarship assigned.'); go('scholars');
+}
+
+// ---------- UPDATE SCHOLAR STATUS (audit-logged) ----------
+const statusSel = s => `<select onchange="setStatus('${s.id}',this.value)">${STATUSES.map(x => `<option ${x === s.status ? 'selected' : ''}>${x}</option>`).join('')}</select>`;
+async function changeStatus(id, to, reason) {
+  const s = scholars.find(x => x.id === id) || {};
+  const { error } = await sb.from('scholars').update({ status: to }).eq('id', id);
+  if (error) { toast(error.message, false); return false; }
+  await sb.from('status_history').insert({ scholar_id: id, old_status: s.status || null, new_status: to, reason: reason || null, changed_by: me.id });
+  return true;
+}
+async function latestEval(id) {
+  const { data } = await sb.from('grade_submissions').select('evaluation_result').eq('scholar_id', id).eq('submission_status', 'Verified').order('verified_at', { ascending: false }).limit(1);
+  return data?.[0]?.evaluation_result || null;
+}
+async function setStatus(id, to) {
+  if (!isStaff()) return;
+  if (to === 'Compliant' && await latestEval(id) !== 'Compliant') { toast('BR-06: cannot mark Compliant without a verified Compliant evaluation.', false); return go('scholars'); }
+  const reason = prompt(`Reason for changing status to "${to}":`);
+  if (reason === null) return go('scholars');
+  if (await changeStatus(id, to, reason)) toast('Status updated.');
+  go('scholars');
+}
+
+// ---------- RECORD / VIEW DEFICIENCY ----------
+let DEF = [];
+async function viewDef() {
+  DEF = (await sb.from('deficiencies').select('*, scholars(student_id, full_name)').order('recorded_at', { ascending: false })).data || [];
+  $('view').innerHTML = `<div class="card"><h2>Record Deficiency</h2>${staffOnly(`<form onsubmit="saveDef(event)">
+    <label>Scholar<select id="d_s"><option value="">-- select --</option>${opts(scholars, 'id', s => `${s.student_id} – ${s.full_name}`)}</select></label>
+    <label>Description<input id="d_d" placeholder="e.g. Missing certificate of registration"></label>
+    <button class="btn">Record</button></form>`)}</div>
+    <div class="card"><h2>Deficiencies</h2><div class="bar"><select id="d_f" onchange="renderDef()"><option value="">All</option><option>Open</option><option>Resolved</option></select></div><div class="tbl" id="dtbl"></div></div>`;
+  renderDef();
+}
+function renderDef() {
+  const f = $('d_f').value, rows = DEF.filter(d => !f || d.status === f);
+  $('dtbl').innerHTML = `<table><tr><th>Scholar</th><th>Deficiency</th><th>Recorded</th><th>Status</th><th></th></tr>${rows.map(d =>
+    `<tr><td>${esc(d.scholars?.student_id)} ${esc(d.scholars?.full_name)}</td><td>${esc(d.description)}</td><td>${new Date(d.recorded_at).toLocaleDateString()}</td>
+    <td><span class="tag ${d.status === 'Open' ? 'With Deficiency' : 'Compliant'}">${d.status}</span></td>
+    <td>${isStaff() && d.status === 'Open' ? `<button class="btn sm ok" onclick="resolveDef('${d.id}')">Resolve</button>` : ''}</td></tr>`).join('') || '<tr><td colspan=5>No deficiencies.</td></tr>'}</table>`;
+}
+async function saveDef(e) {
+  e.preventDefault();
+  if (!$('d_s').value || !$('d_d').value.trim()) return toast('Select a scholar and enter a description.', false);
+  const { error } = await sb.from('deficiencies').insert({ scholar_id: $('d_s').value, description: $('d_d').value.trim(), recorded_by: me.id });
+  if (error) return toast(error.message, false);
+  toast('Deficiency recorded.'); viewDef();
+}
+async function resolveDef(id) {
+  const { error } = await sb.from('deficiencies').update({ status: 'Resolved', resolved_at: new Date().toISOString() }).eq('id', id);
+  if (error) return toast(error.message, false);
+  toast('Deficiency resolved.'); viewDef();
+}
+
+// ---------- SCHOLARSHIP RENEWAL ----------
+// Rule: eligible = latest VERIFIED evaluation is Compliant AND no open deficiencies
+async function eligibility(id) {
+  const ev = await latestEval(id);
+  const { count } = await sb.from('deficiencies').select('*', { count: 'exact', head: true }).eq('scholar_id', id).eq('status', 'Open');
+  return { ok: ev === 'Compliant' && !count, ev, open: count || 0 };
+}
+async function viewRenewal() {
+  const [sub, def, ren] = await Promise.all([
+    sb.from('grade_submissions').select('scholar_id, academic_year, evaluation_result').eq('submission_status', 'Verified').order('verified_at', { ascending: false }),
+    sb.from('deficiencies').select('scholar_id').eq('status', 'Open'),
+    sb.from('renewals').select('*, scholars(student_id, full_name)').order('created_at', { ascending: false })]);
+  const last = {}, open = {};
+  (sub.data || []).forEach(g => { if (!last[g.scholar_id]) last[g.scholar_id] = g; });
+  (def.data || []).forEach(d => open[d.scholar_id] = (open[d.scholar_id] || 0) + 1);
+  const act = s => {
+    if (!isStaff()) return '';
+    if (s.status === 'For Renewal') return `<button class="btn sm ok" onclick="decide('${s.id}','Renewed')">Approve</button> <button class="btn sm" onclick="decide('${s.id}','Probation')">Probation</button> <button class="btn sm" style="background:#d9433b;color:#fff" onclick="decide('${s.id}','Denied')">Deny</button>`;
+    return `<button class="btn sm" onclick="startRenewal('${s.id}')">Start Renewal</button>`;
+  };
+  $('view').innerHTML = `<div class="card tbl"><h2>Scholarship Renewal</h2>
+    <p><small><b>Rule:</b> a scholar is eligible for renewal only if the latest verified evaluation is Compliant and there are no open deficiencies.</small></p>
+    <table><tr><th>Scholar</th><th>Status</th><th>Latest result</th><th>Open deficiencies</th><th>Eligible</th><th></th></tr>${scholars.map(s => {
+    const l = last[s.id], o = open[s.id] || 0, ok = l?.evaluation_result === 'Compliant' && !o;
+    return `<tr><td>${esc(s.student_id)} ${esc(s.full_name)}</td><td>${tag(s.status)}</td><td>${l ? tag(l.evaluation_result) : '—'}</td><td>${o}</td><td>${ok ? '✔ Yes' : '✘ No'}</td><td>${act(s)}</td></tr>`; }).join('')}</table></div>
+    <div class="card tbl"><h2>Renewal History</h2><table><tr><th>Scholar</th><th>AY</th><th>Outcome</th><th>Remarks</th><th>Processed</th></tr>${(ren.data || []).map(r =>
+    `<tr><td>${esc(r.scholars?.student_id)} ${esc(r.scholars?.full_name)}</td><td>${esc(r.academic_year)}</td><td>${tag(r.status)}</td><td>${esc(r.remarks) || '—'}</td><td>${r.processed_at ? new Date(r.processed_at).toLocaleDateString() : '—'}</td></tr>`).join('') || '<tr><td colspan=5>No renewals yet.</td></tr>'}</table></div>`;
+}
+async function startRenewal(id) {
+  const ay = prompt('Academic year for renewal (e.g. 2026-2027):');
+  if (!ay) return;
+  const { error } = await sb.from('renewals').insert({ scholar_id: id, academic_year: ay.trim() });
+  if (error) return toast(error.message, false);
+  await changeStatus(id, 'For Renewal', 'Renewal started for ' + ay);
+  toast('Renewal started.'); go('renewal');
+}
+async function decide(id, outcome) {
+  if (outcome === 'Renewed') {
+    const el = await eligibility(id);
+    if (!el.ok) return toast(`Not eligible: latest result ${el.ev || 'none'}, ${el.open} open deficiency(ies).`, false);
+  }
+  const remarks = prompt('Remarks (optional):') ?? '';
+  const { data: p } = await sb.from('renewals').select('id').eq('scholar_id', id).eq('status', 'Pending').order('created_at', { ascending: false }).limit(1);
+  if (!p?.length) return toast('No pending renewal found.', false);
+  const status = outcome === 'Renewed' ? 'Renewed' : 'Denied';
+  const { error } = await sb.from('renewals').update({ status, remarks, processed_by: me.id, processed_at: new Date().toISOString() }).eq('id', p[0].id);
+  if (error) return toast(error.message, false);
+  await changeStatus(id, { Renewed: 'Renewed', Probation: 'Probationary', Denied: 'Disqualified' }[outcome], 'Renewal ' + status + (remarks ? ': ' + remarks : ''));
+  toast('Renewal processed.'); go('renewal');
+}
+
+// ---------- COMPLIANCE REPORT (filter, print, CSV) ----------
+let RP = [];
+async function viewReports() {
+  RP = (await sb.from('grade_submissions').select('*, scholars(student_id, full_name, scholarship_id, scholarship_programs(program_name))').eq('submission_status', 'Verified').order('verified_at', { ascending: false })).data || [];
+  const ays = [...new Set(RP.map(g => g.academic_year))];
+  $('view').innerHTML = `<div class="card"><h2>Compliance Report</h2>
+    <div class="bar"><select id="rp" onchange="renderReport()"><option value="">All programs</option>${opts(programs, 'id', 'program_name')}</select>
+    <select id="ra" onchange="renderReport()"><option value="">All academic years</option>${ays.map(a => `<option>${esc(a)}</option>`).join('')}</select>
+    <select id="rs" onchange="renderReport()"><option value="">All semesters</option><option>1st</option><option>2nd</option><option>Summer</option></select>
+    <select id="rr" onchange="renderReport()"><option value="">All results</option><option>Compliant</option><option>With Deficiency</option></select></div>
+    <div class="bar"><button class="btn" onclick="window.print()">🖨 Print</button><button class="btn" onclick="exportReport()">⬇ Export CSV</button></div>
+    <div id="rsum" class="grid" style="margin-bottom:14px"></div><div class="tbl" id="rtbl"></div></div>`;
+  renderReport();
+}
+const reportRows = () => RP.filter(g => (!$('rp').value || g.scholars.scholarship_id === $('rp').value) && (!$('ra').value || g.academic_year === $('ra').value) && (!$('rs').value || g.semester === $('rs').value) && (!$('rr').value || g.evaluation_result === $('rr').value));
+function renderReport() {
+  const r = reportRows(), c = r.filter(g => g.evaluation_result === 'Compliant').length;
+  const S = (n, l) => `<div class="stat"><b>${n}</b><span>${l}</span></div>`;
+  $('rsum').innerHTML = S(r.length, 'Verified submissions') + S(c, 'Compliant') + S(r.length - c, 'With Deficiency') + S(r.length ? Math.round(c / r.length * 100) + '%' : '—', 'Compliance rate');
+  $('rtbl').innerHTML = `<table><tr><th>Student ID</th><th>Name</th><th>Program</th><th>AY / Sem</th><th>GWA</th><th>Units</th><th>Result</th><th>Deficiency</th></tr>${r.map(g =>
+    `<tr><td>${esc(g.scholars.student_id)}</td><td>${esc(g.scholars.full_name)}</td><td>${esc(g.scholars.scholarship_programs?.program_name)}</td><td>${esc(g.academic_year)} ${esc(g.semester)}</td><td>${g.gwa}</td><td>${g.units_enrolled}</td><td>${tag(g.evaluation_result)}</td><td>${esc(g.deficiency_notes) || '—'}</td></tr>`).join('') || '<tr><td colspan=8>No records match.</td></tr>'}</table>`;
+}
+function exportReport() {
+  const rows = [['Student ID', 'Name', 'Program', 'Academic Year', 'Semester', 'GWA', 'Units', 'Failed', 'Incomplete', 'Result', 'Deficiency']].concat(reportRows().map(g =>
+    [g.scholars.student_id, g.scholars.full_name, g.scholars.scholarship_programs?.program_name, g.academic_year, g.semester, g.gwa, g.units_enrolled, g.failed_subjects, g.incomplete_subjects, g.evaluation_result, g.deficiency_notes]));
+  const t = rows.map(r => r.map(c => '"' + String(c ?? '').replace(/"/g, '""') + '"').join(',')).join('\n');
+  const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([t], { type: 'text/csv' })); a.download = 'compliance_report.csv'; a.click();
 }
 
 boot();
